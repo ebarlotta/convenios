@@ -1,6 +1,7 @@
 <?php
 
-// use App\Livewire\ConveniosComponent;
+use App\Http\Livewire\Carreras\CarreraComponent;
+//use CarrerasComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('convenios', ConveniosComponent::class)->name('convenios');
+Route::get('carreras', CarreraComponent::class)->name('carreras');
