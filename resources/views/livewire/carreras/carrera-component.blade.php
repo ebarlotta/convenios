@@ -1,37 +1,4 @@
 <div>
-    <!-- <div>
-        <label for="">Nombre de la Carrera</label>
-        <input type="text" value="{{ $nombrecarrera }}" wire:model="nombrecarrera">
-    </div>
-    <div>
-        <label for="">Sede</label>
-        <input type="text" value="{{ $sede }}" wire:model="sede">
-    </div>
-    Listado de carreras {{ $carreras }}.
-    <input type="text" data-toggle="modal" data-target="#exampleModal" wire:click="Llamar()">
-    <button>Llamar</button>
-    
-    // Modal
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" wire:model="devuelto">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div> -->
-
-
     <div class="grey-bg container-fluid">
         <section id="stats-subtitle">
         @if(session("mensaje"))
@@ -46,11 +13,16 @@
                             <div class="card-body cleartfix">
                                 <div class="media align-items-stretch">
                                     <div class="media-body">
-                                        <div class="flex d-flex">
-                                            <h4>Listado de Carreras</h4>
-                                            <button type="button" class="ml-3 mb-1 btn btn-info" data-toggle="modal" data-target="#ModalEdit">
-                                                Nueva
-                                            </button>
+                                        <div class="flex d-flex justify-content-beetwen">
+                                            <div class="flex d-flex col-9">
+                                                <h4>Listado de Carreras</h4>
+                                                <button type="button" class="ml-3 mb-1 btn btn-info" wire:click="showNew()" data-toggle="modal" data-target="#ModalEdit">
+                                                    Nueva
+                                                </button>
+                                            </div>
+                                            <div class="col-3">
+                                                <input wire:model="buscar" type="text" class="form-control rounded-md" placeholder="Buscar">
+                                            </div>
                                         </div>
                                         <table class="table table-hover text-nowrap table-rounded">
                                             <tr>
@@ -58,20 +30,22 @@
                                                 <td>Sede</td>
                                                 <td>Opciones</td>
                                             </tr>
-                                            @foreach ($carreras as $carrera)
-                                            <tr>
-                                                <td>{{ $carrera->nombrecarrera }}</td>
-                                                <td>{{ $carrera->sede }}</td>
-                                                <td>
-                                                    <button type="button" wire:click="showEdit({{$carrera->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
-                                                        Editar
-                                                    </button>
-                                                    <button type="button" wire:click="showDelete({{$carrera->id}})" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">
-                                                        Eliminar
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                            @if($carreras)
+                                                @foreach ($carreras as $carrera)
+                                                <tr>
+                                                    <td>{{ $carrera->nombrecarrera }}</td>
+                                                    <td>{{ $carrera->sede }}</td>
+                                                    <td>
+                                                        <button type="button" wire:click="showEdit({{$carrera->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
+                                                            Editar
+                                                        </button>
+                                                        <button type="button" wire:click="showDelete({{$carrera->id}})" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">
+                                                            Eliminar
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @endif
                                         </table>
                                     </div>
                                 </div>

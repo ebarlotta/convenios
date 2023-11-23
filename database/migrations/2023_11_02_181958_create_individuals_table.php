@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('diasdelasemana');
             $table->date('horariosdesdehasta');
             $table->unsignedBigInteger('responsable_id');
-            $table->date('firmaconvenio');
+            $table->date('firmaconvenio')->nullable();
             
             $table->timestamps();
 

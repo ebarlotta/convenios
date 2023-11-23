@@ -330,40 +330,63 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'multilevel',
+            'text'    => 'Gentión Convenios',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Carreras',
+                    'url'  => 'carreras',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text' => 'Responsables',
+                    'url'  => 'responsables',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Estudiantes',
+                    'url'  => 'estudiantes',
+                ],
+                [
+                    'text' => 'Convenios Marco',
+                    'url'  => 'marcos',
+                ],
+                [
+                    'text' => 'Convenios Individuales',
+                    'url'  => 'individuales',
+                ],
+                [
+                    'text' => 'Instituciones',
+                    'url'  => 'receptoras',
+                ],
+                [
+                    'text' => 'Roles',
+                    'url'  => 'roles',
+                ],
+
+            ],
+        ],
+        [
+            'text'    => 'Gentión Proyectos/Salidas',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Proyectos',
+                    'url'  => 'proyectos',
+                ],
+                [
+                    'text' => 'Nomina Estudiantes',
+                    'url'  => 'responsables',
+                ],
+                [
+                    'text' => 'Nomina Docentes',
+                    'url'  => 'estudiantes',
+                ],
+                [
+                    'text' => 'Elevos',
+                    'url'  => 'marcos',
+                ],
+                [
+                    'text' => 'Visitas',
+                    'url'  => 'individuales',
                 ],
             ],
         ],

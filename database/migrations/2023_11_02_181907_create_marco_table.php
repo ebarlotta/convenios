@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('marcos', function (Blueprint $table) {
             $table->id();
-            $table->integer('nroconvenio');
+            $table->integer('nroconvenio')->nullable();
             $table->integer('anio');
-            $table->date('firmaconvenio');
+            $table->date('firmaconvenio')->nullable();
             $table->string('aprobadoporresolucion');
             $table->string('polizanro');
             $table->date('vigenciadesde');

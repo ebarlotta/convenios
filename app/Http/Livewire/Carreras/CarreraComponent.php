@@ -11,16 +11,21 @@ class CarreraComponent extends Component
     public $sede;
     public $carreras;
 
+    public $buscar;
+
     public $carrera_id;
 
     public function render()
     {
-        $this->carreras = Carreras::all();
+        if($this->buscar) { 
+            $this->carreras = Carreras::where('nombrecarrera', 'LIKE', "%".$this->buscar."%")->orWhere('sede', 'LIKE', "%".$this->buscar."%")->get();
+        }
+        else { $this->carreras = Carreras::all(); }
         return view('livewire.carreras.carrera-component')->extends('layouts.admin');
     }
 
-    public function Llamar() {
-        dd('llego');
+    public function showNew() {
+        $this->reset('nombrecarrera','sede');
     }
 
     public function showEdit($id) {
@@ -34,10 +39,6 @@ class CarreraComponent extends Component
         $carreras = Carreras::find($id);
         $this->nombrecarrera = $carreras->nombrecarrera;
         $this->carrera_id = $id;
-    }
-
-    public function showNew() {
-        $this->reset();
     }
 
     public function destroy($id) {

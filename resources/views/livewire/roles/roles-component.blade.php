@@ -15,7 +15,7 @@
                                     <div class="media-body">
                                         <div class="flex d-flex justify-content-beetwen">
                                             <div class="flex d-flex col-9">
-                                                <h4>Listado de Convenios Marco</h4>
+                                                <h4>Listado de Roles</h4>
                                                 <button type="button" class="ml-3 mb-1 btn btn-info" wire:click="showNew()" data-toggle="modal" data-target="#ModalEdit">
                                                     Nuevo
                                                 </button>
@@ -26,30 +26,18 @@
                                         </div>
                                         <table class="table table-hover text-nowrap table-rounded">
                                             <tr>
-                                                <td>Número de convenio</td>
-                                                <td>Año</td>
-                                                <td>Fecha de Firma</td>
-                                                <td>Aprob. Res.</td>
-                                                <td>Poliza Nro</td>
-                                                <td>Vigencia Desde</td>
-                                                <td>Vigencia Hasta</td>
+                                                <td>Rol</td>
                                                 <td>Opciones</td>
                                             </tr>
-                                            @if($convenios)
-                                                @foreach ($convenios as $convenio)
+                                            @if($roles)
+                                                @foreach ($roles as $rol)
                                                 <tr>
-                                                    <td>{{ $convenio->nroconvenio }}</td>
-                                                    <td>{{ $convenio->anio }}</td>
-                                                    <td>{{ $convenio->firmaconvenio }}</td>
-                                                    <td>{{ $convenio->aprobadoporresolucion }}</td>
-                                                    <td>{{ $convenio->polizanro }}</td>
-                                                    <td>{{ $convenio->vigenciadesde }}</td>
-                                                    <td>{{ $convenio->vigenciahasta }}</td>
+                                                    <td>{{ $rol->descripcionrol }}</td>
                                                     <td>
-                                                        <button type="button" wire:click="showEdit({{$convenio->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
+                                                        <button type="button" wire:click="showEdit({{$rol->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
                                                             Editar
                                                         </button>
-                                                        <button type="button" wire:click="showDelete({{$convenio->id}})" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">
+                                                        <button type="button" wire:click="showDelete({{$rol->id}})" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">
                                                             Eliminar
                                                         </button>
                                                     </td>
@@ -65,64 +53,22 @@
                 </div>
             </div>
 
-            <!-- Modal Alta/Modificación Convenio -->
+            <!-- Modal Alta/Modificación Rol -->
             <!-- ================================== -->
             <div wire:ignore.self class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog " role="document">
                     <div class="modal-content" style="width: inherit">
                         <div class="modal-header">
-                            <h5 class="modal-title">Alta/Modificación Convenio</h5>
+                            <h5 class="modal-title">Alta/Modificación Roles</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="px-3 py-3">
                             <div>
-                                <label for="">Número de Convenio</label>
-                                <input type="text" class="form-control" value="{{ old('nroconvenio') }}" wire:model="nroconvenio" disabled>
-                                @error('nroconvenio')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="">Año</label>
-                                <input type="text" class="form-control" value="{{ old('anio') }}" wire:model="anio">
-                                @error('anio')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="">Fecha de la firma del convenio</label>
-                                <input type="date" class="form-control" value="{{ old('firmaconvenio') }}" wire:model="firmaconvenio">
-                                @error('firmaconvenio')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="">Aprobado por resolución</label>
-                                <input type="text" class="form-control" value="{{ old('aprobadoporresolucion') }}" wire:model="aprobadoporresolucion">
-                                @error('aprobadoporresolucion')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="">Póliza Nro</label>
-                                <input type="text" class="form-control" value="{{ old('polizanro') }}" wire:model="polizanro">
-                                @error('polizanro')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="">Vigencia Desde</label>
-                                <input type="date" class="form-control" value="{{ old('vigenciadesde') }}" wire:model="vigenciadesde">
-                                @error('vigenciadesde')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="">Vigencia Hasta</label>
-                                <input type="date" class="form-control" value="{{ old('vigenciahasta') }}" wire:model="vigenciahasta">
-                                @error('vigenciahasta')
+                                <label for="">Nombre de la Rol</label>
+                                <input type="text" class="form-control" value="{{ old('descripcionrol') }}" wire:model="descripcionrol">
+                                @error('descripcionrol')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -139,23 +85,23 @@
                 </div>
             </div>
 
-            <!-- Modal Eliminar Convenio -->
+            <!-- Modal Eliminar Rol -->
             <!-- ====================== -->
             <div wire:ignore.self class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog " role="document">
                     <div class="modal-content" style="width: inherit">
                         <div class="modal-header">
-                            <h5 class="modal-title">Eliminar Convenio</h5>
+                            <h5 class="modal-title">Eliminar Rol</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="px-3 py-3">
                             <div>
-                                Está seguro de que quiere eliminar el convenio: <b>{{ $nroconvenio }}</b>?
+                                Está seguro de que quiere eliminar el rol: <b>{{ $descripcionrol }}</b>?
                             </div>
                             <div class="pt-3">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click="destroy({{ $convenio_id }})">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click="destroy({{ $rol_id }})">
                                     <i class="fa-solid fa-pen-to-square"></i>Eliminar
                                 </button>
                                 <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">
