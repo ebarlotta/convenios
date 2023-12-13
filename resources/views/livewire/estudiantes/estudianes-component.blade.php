@@ -25,7 +25,7 @@
                                             </div>
                                         </div>
                                         <table class="table table-hover text-nowrap table-rounded">
-                                            <tr>
+                                            <tr style="background-color: lightgray;">
                                                 <td>Nombre Estudiante</td>
                                                 <td>DNI</td>
                                                 <td>Domicilio</td>
@@ -35,14 +35,14 @@
                                                 <td>Carrera</td>
                                                 <td>Tareas Asignadas</td>
                                             </tr>
-                                            <tr>
+                                            <tr style="background-color: lightgray;">
                                                 <td>Cuil</td>
                                                 <td>Fecha de Nacimiento</td>
                                                 <td>Legajo</td>
                                                 <td>Póliza Nro</td>
                                                 <td>Vigencia Desde</td>
                                                 <td>Vigencia Hasta</td>
-                                                <td>Opciones</td>
+                                                <td colspan="2" align="center">Opciones</td>
                                             </tr>
                                             @if($estudiantes)
                                                 @foreach ($estudiantes as $estudiante)
@@ -205,13 +205,19 @@
                                 @enderror
                             </div>
                             <div class="pt-3">
-                                <button type="button" class="btn btn-success"  data-dismiss="modal" wire:click="store()">
+                                <button type="button" class="btn btn-success" wire:click="store()">
                                     <i class="fa-solid fa-pen-to-square"></i>Guardar
                                 </button>
                                 <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">
                                     <i class="fa-solid fa-pen-to-square"></i>Cerrar
                                 </button>
                             </div>
+                            @if(session("mensaje"))
+                                <br>
+                                <div class="bg-green round-md alert alert-success">
+                                    {{ session('mensaje') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -233,13 +239,19 @@
                                 Está seguro de que quiere eliminar el estudiante: <b>{{ $nombreestudiante }}</b>?
                             </div>
                             <div class="pt-3">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click="destroy({{ $estudiante_id }})">
+                                <button type="button" class="btn btn-danger" wire:click="destroy({{ $estudiante_id }})">
                                     <i class="fa-solid fa-pen-to-square"></i>Eliminar
                                 </button>
                                 <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">
                                     <i class="fa-solid fa-pen-to-square"></i>Cerrar
                                 </button>
                             </div>
+                            @if(session("mensaje"))
+                                <br>
+                                <div class="bg-green round-md alert alert-success">
+                                    {{ session('mensaje') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

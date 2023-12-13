@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Marcos;
 
+use App\Models\Carreras;
 use Livewire\Component;
 use App\Models\Marcos;
 
@@ -15,8 +16,10 @@ class MarcosComponent extends Component
     public $polizanro;
     public $vigenciadesde;
     public $vigenciahasta;
+    public $carrera_id;
 
     public $convenios;
+    public $carreras;
 
     public $buscar;
 
@@ -31,11 +34,12 @@ class MarcosComponent extends Component
             ->get();
         }
         else { $this->convenios = Marcos::all(); }
+        $this->carreras = Carreras::orderby('nombrecarrera')->get();
         return view('livewire.marcos.marcos-component')->extends('layouts.admin');
     }
 
     public function showNew() {
-        $this->reset('nroconvenio','anio','firmaconvenio','aprobadoporresolucion','polizanro','vigenciadesde','vigenciahasta');
+        $this->reset('nroconvenio','anio','firmaconvenio','aprobadoporresolucion','polizanro','vigenciadesde','vigenciahasta','carrera_id');
     }
 
     public function showEdit($id) {
@@ -48,6 +52,7 @@ class MarcosComponent extends Component
         $this->vigenciadesde = $convenios->vigenciadesde;
         $this->vigenciahasta = $convenios->vigenciahasta;
         $this->convenio_id = $id;
+        $this->carrera_id = $convenios->carrera_id;
     }
 
     public function showDelete($id) {
@@ -58,7 +63,7 @@ class MarcosComponent extends Component
 
     public function destroy($id) {
         Marcos::destroy($this->convenio_id);
-        $this->reset('nroconvenio','anio','firmaconvenio','aprobadoporresolucion','polizanro','vigenciadesde','vigenciahasta');
+        $this->reset('nroconvenio','anio','firmaconvenio','aprobadoporresolucion','polizanro','vigenciadesde','vigenciahasta','carrera_id');
         session()->flash('mensaje', 'Se eliminó el convenio.');
     }
 
@@ -70,16 +75,47 @@ class MarcosComponent extends Component
             'polizanro' => 'required',
             'vigenciadesde' => 'required|date',
             'vigenciahasta' => 'required|date',
+            'carrera_id' => 'required',
         ]);
+
+        if(is_null($this->nroconvenio)) {
+            $NroConvenio = $this->BuscarSiguienteNroConvenio();
+        } else {
+            $NroConvenio = $this->nroconvenio;
+        }
+
         Marcos::updateOrCreate(['id'=>$this->convenio_id],[
+            'nroconvenio' => $NroConvenio,
             'anio' => $this->anio,
             'firmaconvenio' => $this->firmaconvenio,
             'aprobadoporresolucion' => $this->aprobadoporresolucion,
             'polizanro' => $this->polizanro,
             'vigenciadesde' => $this->vigenciadesde,
             'vigenciahasta' => $this->vigenciahasta,
+            'carrera_id' => $this->carrera_id,
         ]);
         $this->convenio_id = null;
         session()->flash('mensaje', 'Se guardó el convenio.');
+    }
+
+    public function BuscarSiguienteNroConvenio() {
+        $totalconvenios=Marcos::where('carrera_id','=',$this->carrera_id)->count();
+        $totalconvenios++;
+
+        //Extrae la primera letra de una frase
+        $carrera = Carreras::find($this->carrera_id);
+        $frase = $carrera->nombrecarrera;  //$str = 'CORPORACIÓN GR AN FORMATO SAC';
+
+        // Dividir la frase en palabras
+        $palabras = explode(" ", $frase);
+
+        // Iterar sobre las palabras y obtener la primera letra de cada una
+        $primerasLetras = "";
+        foreach ($palabras as $palabra) {
+            $primerasLetras .= substr($palabra, 0, 1);
+        }
+        
+        $siguienteNroConvenio = str_pad($totalconvenios,3,"0", STR_PAD_LEFT);
+        return strtoupper($primerasLetras.'-'.$siguienteNroConvenio.'-'.$this->anio);
     }
 }

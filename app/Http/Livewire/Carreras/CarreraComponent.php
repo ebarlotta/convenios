@@ -9,6 +9,7 @@ class CarreraComponent extends Component
 {
     public $nombrecarrera;
     public $sede;
+    public $resolucion;
     public $carreras;
 
     public $buscar;
@@ -25,12 +26,13 @@ class CarreraComponent extends Component
     }
 
     public function showNew() {
-        $this->reset('nombrecarrera','sede');
+        $this->reset('nombrecarrera','sede','resolucion');
     }
 
     public function showEdit($id) {
         $carreras = Carreras::find($id);
         $this->nombrecarrera = $carreras->nombrecarrera;
+        $this->resolucion = $carreras->resolucion;
         $this->sede = $carreras->sede;
         $this->carrera_id = $id;
     }
@@ -49,11 +51,13 @@ class CarreraComponent extends Component
 
     public function store() {
         $this->validate([
-            'nombrecarrera' => 'required|unique:carreras|max:255',
+            'nombrecarrera' => 'required|max:255',
+            'resolucion' => 'required|max:255',
             'sede' => 'required',
         ]);
         Carreras::updateOrCreate(['id'=>$this->carrera_id],[
             'nombrecarrera' => $this->nombrecarrera,
+            'resolucion' => $this->resolucion,
             'sede' => $this->sede,
         ]);
         $this->carrera_id = null;

@@ -25,8 +25,9 @@
                                             </div>
                                         </div>
                                         <table class="table table-hover text-nowrap table-rounded">
-                                            <tr>
+                                            <tr style="background-color: lightgray;">
                                                 <td>Nombre de la Carrera</td>
+                                                <td>Resolución</td>
                                                 <td>Sede</td>
                                                 <td>Opciones</td>
                                             </tr>
@@ -34,6 +35,7 @@
                                                 @foreach ($carreras as $carrera)
                                                 <tr>
                                                     <td>{{ $carrera->nombrecarrera }}</td>
+                                                    <td>{{ $carrera->resolucion }}</td>
                                                     <td>{{ $carrera->sede }}</td>
                                                     <td>
                                                         <button type="button" wire:click="showEdit({{$carrera->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
@@ -75,6 +77,13 @@
                                 @enderror
                             </div>
                             <div>
+                                <label for="">Resolución</label>
+                                <input type="text" class="form-control" value="{{ old('resolucion') }}" wire:model="resolucion">
+                                @error('resolucion')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div>
                                 <label for="">Sede</label>
                                 <input type="text" class="form-control" value="{{ old('sede') }}" wire:model="sede">
                                 @error('sede')
@@ -82,12 +91,20 @@
                                 @enderror
                             </div>
                             <div class="pt-3">
-                                <button type="button" class="btn btn-success"  data-dismiss="modal" wire:click="store()">
+                                <button type="button" class="btn btn-success" wire:click="store()">
                                     <i class="fa-solid fa-pen-to-square"></i>Guardar
                                 </button>
                                 <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">
                                     <i class="fa-solid fa-pen-to-square"></i>Cerrar
                                 </button>
+
+                                @if(session("mensaje"))
+                                    <br>
+                                    <br>
+                                    <div class="bg-green round-md alert alert-success mx-3">
+                                        {{ session('mensaje') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

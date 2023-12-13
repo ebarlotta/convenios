@@ -13,15 +13,18 @@ return new class extends Migration
     {
         Schema::create('marcos', function (Blueprint $table) {
             $table->id();
-            $table->integer('nroconvenio')->nullable();
+            $table->string('nroconvenio',20)->nullable();
             $table->integer('anio');
             $table->date('firmaconvenio')->nullable();
             $table->string('aprobadoporresolucion');
             $table->string('polizanro');
             $table->date('vigenciadesde');
             $table->date('vigenciahasta');
-
+            $table->unsignedBigInteger('carrera_id');
+            
             $table->timestamps();
+
+            $table->foreign('carrera_id')->references('id')->on('carreras');
         });
     }
 

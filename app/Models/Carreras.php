@@ -11,6 +11,7 @@ class Carreras extends Model
 
     protected $fillable=[
         'nombrecarrera',
+        'resolucion',
         'sede',
     ];
 }

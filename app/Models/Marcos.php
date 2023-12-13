@@ -17,5 +17,6 @@ class Marcos extends Model
         'polizanro',
         'vigenciadesde',
         'vigenciahasta',
+        'carrera_id',
     ];
 }

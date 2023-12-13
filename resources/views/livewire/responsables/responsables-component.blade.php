@@ -25,7 +25,7 @@
                                             </div>
                                         </div>
                                         <table class="table table-hover text-nowrap table-rounded">
-                                            <tr>
+                                            <tr style="background-color: lightgray;">
                                                 <td>Responsable</td>
                                                 <td>DNI</td>
                                                 <td>Teléfono</td>
@@ -115,13 +115,20 @@
                                 @enderror
                             </div>
                             <div class="pt-3">
-                                <button type="button" class="btn btn-success"  data-dismiss="modal" wire:click="store()">
+                                <button type="button" class="btn btn-success" wire:click="store()">
                                     <i class="fa-solid fa-pen-to-square"></i>Guardar
                                 </button>
                                 <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">
                                     <i class="fa-solid fa-pen-to-square"></i>Cerrar
                                 </button>
                             </div>
+                            @if(session("mensaje"))
+                                <br>
+                                <div class="bg-green round-md alert alert-success">
+                                    {{ session('mensaje') }}
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
