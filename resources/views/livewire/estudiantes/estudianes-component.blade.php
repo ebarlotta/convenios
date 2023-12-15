@@ -32,8 +32,8 @@
                                                 <td>Provincia</td>
                                                 <td>Correo Electrónico</td>
                                                 <td>Teléfono</td>
-                                                <td>Carrera</td>
                                                 <td>Tareas Asignadas</td>
+                                                <td>Carrera</td>
                                             </tr>
                                             <tr style="background-color: lightgray;">
                                                 <td>Cuil</td>
@@ -42,27 +42,30 @@
                                                 <td>Póliza Nro</td>
                                                 <td>Vigencia Desde</td>
                                                 <td>Vigencia Hasta</td>
-                                                <td colspan="2" align="center">Opciones</td>
+                                                <td></td>
+                                                <td align="center">Opciones</td>
                                             </tr>
                                             @if($estudiantes)
                                                 @foreach ($estudiantes as $estudiante)
-                                                <tr class="pt-2" style="background-color: rgb(255, 160, <?php $a=rand(5, 254); echo $a; ?>);">
-                                                    <td>{{ $estudiante->nombreestudiante }}</td>
+                                                <tr class="pt-2">
+                                                <!-- <tr class="pt-2" style="background-color: rgb(255, 160, <?php //$a=rand(5, 254); echo $a; ?>);"> -->
+                                                    <td><b>{{ $estudiante->nombreestudiante }}</b></td>
                                                     <td>{{ $estudiante->dniestudiante }}</td>
                                                     <td>{{ $estudiante->domicilioestudiante }}</td>
-                                                    <td>{{ $estudiante->provincia_id }}</td>
+                                                    <td>{{ $estudiante->provincia->nombreprovincia }}</td>
                                                     <td>{{ $estudiante->emailestudiante }}</td>
                                                     <td>{{ $estudiante->telefonoestudiante }}</td>
-                                                    <td>{{ $estudiante->carrera_id }}</td>
-                                                    <td colspan="2">{{ $estudiante->tareasasignadas }}</td>
+                                                    <td rowspan="2">{{ $estudiante->tareasasignadas }}</td>
+                                                    <td>{{ $estudiante->carrera->nombrecarrera }}</td>
                                                 </tr>
-                                                <tr style="background-color: rgb(255, 160, <?php echo $a; ?>);">
+                                                <tr style="border-bottom-style: double;">
+                                                <!-- <tr style="background-color: rgb(255, 160, <?php //echo $a; ?>);"> -->
                                                     <td>{{ $estudiante->cuil }}</td>
-                                                    <td>{{ $estudiante->fechanacimiento }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($estudiante->fechanacimiento)) }}</td>
                                                     <td>{{ $estudiante->legajo }}</td>
                                                     <td>{{ $estudiante->polizanro }}</td>
-                                                    <td>{{ $estudiante->vigenciadesde }}</td>
-                                                    <td colspan="2">{{ $estudiante->vigenciahasta }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($estudiante->vigenciadesde)) }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($estudiante->vigenciahasta)) }}</td>
                                                     <td>
                                                         <button type="button" wire:click="showEdit({{$estudiante->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
                                                             Editar

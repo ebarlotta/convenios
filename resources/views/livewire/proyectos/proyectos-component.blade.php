@@ -24,8 +24,8 @@
                                                 <input wire:model="buscar" type="text" class="form-control rounded-md" placeholder="Buscar">
                                             </div>
                                         </div>
-                                        <table class="table table-hover text-nowrap table-rounded">
-                                            <tr>
+                                        <table class="table table-hover table-rounded">
+                                            <tr style="background-color: lightgray;">
                                                 <td>Año</td>
                                                 <td>Descripcion de la propuesta</td>
                                                 <td>Intencionalidad pedagógica</td>
@@ -34,13 +34,13 @@
                                                 <td>Localización física y cobertura</td>
                                                 <td>Tareas a realizar</td>
                                             </tr>
-                                            <tr>
+                                            <tr style="background-color: lightgray;">
                                                 <td>Cronograma de actividades</td>
                                                 <td>Detallede fondos</td>
                                                 <td>Responsable</td>
                                                 <td>Documentación de transporte </td>
                                                 <td>Poliza seguro DGE</td>
-                                                <td>Opciones</td>
+                                                <td colspan="2">Opciones</td>
                                             </tr>
                                             @if($proyectos)
                                             @foreach ($proyectos as $proyecto)
@@ -59,10 +59,13 @@
                                                 <td>{{ $proyecto->responsable_id }}</td>
                                                 <td>{{ $proyecto->documentaciondetransporte  }}</td>
                                                 <td>{{ $proyecto->polizasegurodge }}</td>
-                                                <td>
-                                                    <button type="button" wire:click="showEdit({{$proyecto->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
-                                                        Editar
-                                                    </button>
+                                                <td colspan="2">
+                                                    <a href="{{ route('proyectos-edicion',$proyecto->id) }}">
+                                                        <button type="button" class="btn btn-warning">
+                                                        <!-- <button type="button" wire:click="showEdit({{$proyecto->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit"> -->
+                                                            Editar
+                                                        </button>
+                                                    </a>
                                                     <button type="button" wire:click="showDelete({{$proyecto->id}})" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">
                                                         Eliminar
                                                     </button>
@@ -82,7 +85,7 @@
             <!-- Modal Alta/Modificación Convenio -->
             <!-- ================================== -->
             <div wire:ignore.self class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog " role="document">
+                <div class="modal-dialog" role="document" style="max-width: 80%;">
                     <div class="modal-content" style="width: inherit">
                         <div class="modal-header">
                             <h5 class="modal-title">Alta/Modificación Proyecto</h5>
@@ -97,7 +100,7 @@
                                 @if($proyecto_id)
                                 <li><a data-toggle="tab" href="#menu2">Paso 3/4</a></li>
                                 @endif
-                                <li><a data-toggle="tab" href="#menu3">Paso 3/4</a></li>
+                                <li><a data-toggle="tab" href="#menu3">Paso 4/4</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="home" class="tab-pane active">
@@ -119,7 +122,7 @@
 
                                         <textarea id="mytextarea">Hello, World!</textarea>
 
-                                        <textarea wire:model="descripciondelapropuesta" rows="10" style="width: 100%;">{{ old('descripciondelapropuesta') }}</textarea>
+                                        <textarea wire:model="descripciondelapropuesta" rows="5" style="width: 100%;">{{ old('descripciondelapropuesta') }}</textarea>
                                         <!-- <input type="text" class="form-control" value="{{ old('descripciondelapropuesta') }}" wire:model="descripciondelapropuesta"> -->
                                         @error('descripciondelapropuesta')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -127,34 +130,33 @@
                                     </div>
                                     <div>
                                         <label for="">Intencionalidad Pedagógica</label>
-                                        <textarea wire:model="intencionalidadpedagógica" rows="10" style="width: 100%;">{{ old('intencionalidadpedagógica') }}</textarea>
+                                        <textarea wire:model="intencionalidadpedagógica" rows="5" style="width: 100%;">{{ old('intencionalidadpedagógica') }}</textarea>
                                         <!-- <input type="text" class="form-control" value="{{ old('intencionalidadpedagógica') }}" wire:model="intencionalidadpedagógica"> -->
                                         @error('intencionalidadpedagógica')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div id="menu1" class="tab-pane fade">
                                     <div>
                                         <label for="">Relación con las lineas de accion del PEI</label>
-                                        <textarea wire:model="relacionconlaslineasdeacciondelpei" rows="10" style="width: 100%;">{{ old('relacionconlaslineasdeacciondelpei') }}</textarea>
+                                        <textarea wire:model="relacionconlaslineasdeacciondelpei" rows="5" style="width: 100%;">{{ old('relacionconlaslineasdeacciondelpei') }}</textarea>
                                         <!-- <input type="text" class="form-control" value="{{ old('relacionconlaslineasdeacciondelpei') }}" wire:model="relacionconlaslineasdeacciondelpei"> -->
                                         @error('relacionconlaslineasdeacciondelpei')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div>
                                         <label for="">Tareas a realizar</label>
-                                        <textarea wire:model="tareasarealizar" rows="10" style="width: 100%;">{{ old('tareasarealizar') }}</textarea>
+                                        <textarea wire:model="tareasarealizar" rows="5" style="width: 100%;">{{ old('tareasarealizar') }}</textarea>
                                         <!-- <input type="text" class="form-control" value="{{ old('tareasarealizar') }}" wire:model="tareasarealizar"> -->
                                         @error('tareasarealizar')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 @if($proyecto_id)
                                 <div id="menu2" class="tab-pane fade">
-
                                     <div class="px-3 py-3">
                                         <div class="flex d-flex">
                                             <div class="px-3 py-3">

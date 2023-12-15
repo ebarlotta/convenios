@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('ciudadreceptora');
             $table->string('correoreceptora');
             $table->string('enadelantereceptora');
-            $table->string('receptora')->default(2); // 1: Para el IES  2: Para otras instituciones
+            $table->boolean('receptora')->default(false); // true: Para el IES  false: Para otras instituciones
             
             $table->timestamps();
         });

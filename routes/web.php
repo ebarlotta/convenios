@@ -41,3 +41,4 @@ Route::get('estudiantes', EstudianesComponent::class)->name('estudiantes');
 Route::get('individuales', IndividualesComponent::class)->name('individuales');
 Route::get('receptoras', ReceptorasComponent::class)->name('receptoras');
 Route::get('proyectos', ProyectosComponent::class)->name('proyectos');
+Route::get('proyectos-edicion/{proyecto_id}', [ProyectosComponent::class,'renderedicion'])->name('proyectos-edicion');

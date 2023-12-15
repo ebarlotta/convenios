@@ -32,13 +32,23 @@ class IndividualesComponent extends Component
 
     public function render()
     {
-        $this->marcos = Marcos::all();
+        $this->marcos = Marcos::orderby('nroconvenio')->get();
         $this->estudiantes = Estudiantes::all();
         $this->responsables = Responsables::all();
 
         if ($this->buscar) {
-            $this->individuales = Individual::where('descripcionrol', 'LIKE', "%" . $this->buscar . "%")
-                ->get();
+            //Necesita buscar por convenio, nombre del estudiante y nombre del responsable
+        //     $this->docentesnomina = Docentenomina::where('proyecto_id','=',$this->proyecto_id)
+        // ->join('responsables','responsable_id','responsables.id')
+
+            $this->individuales = Individual::orwhere('nroconvenio', 'LIKE', "%" . $this->buscar . "%")
+            ->orwhere('nombreestudiante', 'LIKE', "%" . $this->buscar . "%")
+            ->orwhere('nombreresponsable', 'LIKE', "%" . $this->buscar . "%")
+            ->join('marcos','marco_id','marcos.id')
+            ->join('estudiantes','estudiante_id','estudiantes.id')
+            ->join('responsables','responsable_id','responsables.id')
+            ->get();
+            
         } else {
             $this->individuales = Individual::all();
         }
@@ -66,7 +76,7 @@ class IndividualesComponent extends Component
 
     public function showDelete($id)
     {
-        $individuales = Individual::find($id);
+        // $individuales = Individual::find($id);
         $estudiante = Estudiantes::find($this->estudiante_id);
         $this->nombreestudiante = $estudiante->nombreestudiante;
         $this->individual_id = $id;

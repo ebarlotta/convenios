@@ -33,6 +33,6 @@ class Estudiantes extends Model
 
     public function carrera()
     {
-        return $this->hasOne(Provincias::class,'id','carrera_id');
+        return $this->hasOne(Carreras::class,'id','carrera_id');
     }
 }

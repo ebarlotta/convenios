@@ -363,11 +363,11 @@ return [
                 ],
                 [
                     'text' => 'Nomina Estudiantes',
-                    'url'  => 'responsables',
+                    'url'  => 'estudiantes',
                 ],
                 [
                     'text' => 'Nomina Docentes',
-                    'url'  => 'estudiantes',
+                    'url'  => 'responsables',
                 ],
                 [
                     'text' => 'Elevos',

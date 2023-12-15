@@ -40,11 +40,11 @@
                                                 <tr>
                                                     <td>{{ $convenio->nroconvenio }}</td>
                                                     <td>{{ $convenio->anio }}</td>
-                                                    <td>{{ $convenio->firmaconvenio }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($convenio->firmaconvenio)) }}</td>
                                                     <td>{{ $convenio->aprobadoporresolucion }}</td>
                                                     <td>{{ $convenio->polizanro }}</td>
-                                                    <td>{{ $convenio->vigenciadesde }}</td>
-                                                    <td>{{ $convenio->vigenciahasta }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($convenio->vigenciadesde)) }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($convenio->vigenciahasta)) }}</td>
                                                     <td>
                                                         <button type="button" wire:click="showEdit({{$convenio->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
                                                             Editar

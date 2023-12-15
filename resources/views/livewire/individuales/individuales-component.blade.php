@@ -25,7 +25,7 @@
                                             </div>
                                         </div>
                                         <table class="table table-hover text-nowrap table-rounded">
-                                            <tr>
+                                            <tr style="background-color: lightgray;">
                                                 <td>Nro Conv. <br>Marco</td>
                                                 <td>Estudiante</td>
                                                 <td>Periodo <br>Desde</td>
@@ -34,18 +34,23 @@
                                                 <td>Horarios <br>desde-hasta</td>
                                                 <td>Responsable</td>
                                                 <td>Convenio <br>Firmado</td>
+                                                <td>Opciones</td>
                                             </tr>
                                             @if($individuales)
                                                 @foreach ($individuales as $individuales)
                                                 <tr>
-                                                    <td>{{ $individuales->marco_id }}</td>
+                                                    <td>{{ $individuales->marco->nroconvenio }}</td>
                                                     <td>{{ $individuales->estudiante->nombreestudiante }}</td>
-                                                    <td>{{ $individuales->periododesde }}</td>
-                                                    <td>{{ $individuales->periodohasta }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($individuales->periododesde)) }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($individuales->periodohasta)) }}</td>
                                                     <td>{{ $individuales->diasdelasemana }}</td>
-                                                    <td>{{ $individuales->horariosdesdehasta }}</td>
+                                                    <td>{{ date('d-m-Y',strtotime($individuales->horariosdesdehasta)) }}</td>
                                                     <td>{{ $individuales->responsable->nombreresponsable }}</td>
-                                                    <td>{{ $individuales->firmaconvenio }}</td>
+                                                    @if(is_null($individuales->firmaconvenio))
+                                                        <td class="bg-red">Sin Firmar</td>
+                                                    @else
+                                                        <td>{{ date('d-m-Y',strtotime($individuales->firmaconvenio)) }}</td>
+                                                    @endif
                                                     <td>
                                                         <button type="button" wire:click="showEdit({{$individuales->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
                                                             Editar

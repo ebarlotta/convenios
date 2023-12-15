@@ -27,4 +27,9 @@ class Individual extends Model
     public function responsable() {
         return $this->hasOne(Responsable::class,'id','responsable_id');
     }
+
+    public function marco() {
+        return $this->hasOne(Marcos::class,'id','marco_id');
+    }
+
 }

@@ -55,6 +55,23 @@ class ProyectosComponent extends Component
         else { $this->proyectos = Proyectos::all(); }
         return view('livewire.proyectos.proyectos-component')->extends('layouts.admin');
     }
+
+    public function renderedicion($numero)
+    {
+        // dd($numero);
+        $this->responsables = Responsables::all();
+        $this->carreras = Carreras::all();
+        $this->docentes = Responsables::all();
+        $this->estudiantes = Estudiantes::where('carrera_id','=',$this->carrera_id)->get();
+
+        return view('livewire.proyectos.proyectos-editar-component')
+            ->with(['responsables'=>$this->responsables])
+            ->with(['docentes'=>$this->docentes])
+            ->with(['carreras'=>$this->carreras])
+            ->with(['estudiantes'=>$this->estudiantes]);
+        // return redirect('proyectos-edicion');
+    }
+
     public function showNew() {
         //$this->reset('anio', 'descripciondelapropuesta', 'intencionalidadpedagógica', 'relacionconlaslineasdeacciondelpei', 'determinaciondeestudiantesdocentes', 'localizacionfisicaycobertura', 'tareasarealizar', 'cronogramaseactividades', 'detalledefondos', 'responsable_id', 'documentaciondetransporte', 'polizasegurodge' );
     }
@@ -115,8 +132,8 @@ class ProyectosComponent extends Component
             'documentaciondetransporte' => 'required',
             'polizasegurodge' => 'required',
         ]);
+        // dd($this->descripciondelapropuesta);
         Proyectos::updateOrCreate(['id'=>$this->proyecto_id],[
-
             'anio' => $this->anio,
             'descripciondelapropuesta' => $this->descripciondelapropuesta,
             'intencionalidadpedagógica' => $this->intencionalidadpedagógica,

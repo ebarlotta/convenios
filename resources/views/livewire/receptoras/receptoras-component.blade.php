@@ -32,6 +32,7 @@
                                                 <td>dnirepresentante</td>
                                                 <td>Teléfono</td>
                                                 <td>Carácter Representante</td>
+                                                <td rowspan="2">Opciones</td>
                                             </tr>
                                             <tr style="background-color: lightgray;">
                                                 <td>Acreditado por</td>
@@ -50,15 +51,7 @@
                                                     <td>{{ $receptora->representante->dniresponsable }}</td>
                                                     <td>{{ $receptora->telefonorepresentante }}</td>
                                                     <td>{{ $receptora->caracterrepresentante }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ $receptora->acreditadopor }}</td>
-                                                    <td>{{ $receptora->domicilioreceptora }}</td>
-                                                    <td>{{ $receptora->ciudadreceptora }}</td>
-                                                    <td>{{ $receptora->correoreceptora }}</td>
-                                                    <td>{{ $receptora->enadelantereceptora }}</td>
-                                                    <td>{{ $receptora->receptora ? 'Si' : 'No' }}</td>
-                                                    <td>
+                                                    <td rowspan="2">
                                                         <button type="button" wire:click="showEdit({{$receptora->id}})" class="btn btn-warning" data-toggle="modal" data-target="#ModalEdit">
                                                             Editar
                                                         </button>
@@ -66,6 +59,15 @@
                                                             Eliminar
                                                         </button>
                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ $receptora->acreditadopor }}</td>
+                                                    <td>{{ $receptora->domicilioreceptora }}</td>
+                                                    <td>{{ $receptora->ciudadreceptora }}</td>
+                                                    <td>{{ $receptora->correoreceptora }}</td>
+                                                    <td>{{ $receptora->enadelantereceptora }}</td>
+                                                    <td>{{ ($receptora->receptora==1) ? 'Si' : 'No' }}</td>
+                                                    
                                                 </tr>
                                                 @endforeach
                                             @endif
@@ -168,7 +170,13 @@
                             @enderror
                         </div>
                         <div class="px-3 py-2">
-                            <label for="">Receptora <input type="checkbox" class="form-control" value="{{ old('receptora') }}" wire:model="receptora"></label>
+                            <label for="">Receptora
+                                @if($receptora->receptora)
+                                    <input type="checkbox" class="form-control" value="{{ old('receptora') }}" wire:model="receptora" checked>
+                                @else
+                                    <input type="checkbox" class="form-control" value="{{ old('receptora') }}" wire:model="receptora">
+                                @endif
+                            </label>
                             @error('receptora')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
