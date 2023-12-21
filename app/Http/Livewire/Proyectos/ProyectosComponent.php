@@ -37,6 +37,7 @@ class ProyectosComponent extends Component
 
     public $proyecto_id;
     public $carrera_id;
+    public $carreraactual;
     public $docente_id;
     public $estudiante_id;
     public $estudiantenomina_id;
@@ -64,7 +65,9 @@ class ProyectosComponent extends Component
         $this->docentes = Responsables::all();
         $this->estudiantes = Estudiantes::where('carrera_id','=',$this->carrera_id)->get();
 
-        return view('livewire.proyectos.proyectos-editar-component')
+        $this->showEdit($numero);
+        
+        return view('livewire.proyectos.proyectoseditar-component')->extends('layouts.admin')
             ->with(['responsables'=>$this->responsables])
             ->with(['docentes'=>$this->docentes])
             ->with(['carreras'=>$this->carreras])
@@ -73,34 +76,40 @@ class ProyectosComponent extends Component
     }
 
     public function showNew() {
+        $this->renderedicion(1);
         //$this->reset('anio', 'descripciondelapropuesta', 'intencionalidadpedagógica', 'relacionconlaslineasdeacciondelpei', 'determinaciondeestudiantesdocentes', 'localizacionfisicaycobertura', 'tareasarealizar', 'cronogramaseactividades', 'detalledefondos', 'responsable_id', 'documentaciondetransporte', 'polizasegurodge' );
     }
 
     public function showEdit($id) {
-        $proyectos = Proyectos::find($id);
-        $this->anio = $proyectos->anio;
-        $this->descripciondelapropuesta = $proyectos->descripciondelapropuesta;
-        $this->intencionalidadpedagógica = $proyectos->intencionalidadpedagógica;
-        $this->relacionconlaslineasdeacciondelpei = $proyectos->relacionconlaslineasdeacciondelpei;
-        $this->determinaciondeestudiantesdocentes = $proyectos->determinaciondeestudiantesdocentes;
-        $this->localizacionfisicaycobertura = $proyectos->localizacionfisicaycobertura;
-        $this->tareasarealizar = $proyectos->tareasarealizar;
-        $this->cronogramaseactividades = $proyectos->cronogramaseactividades;
-        $this->detalledefondos = $proyectos->detalledefondos;
-        $this->responsable_id = $proyectos->responsable_id;
-        $this->documentaciondetransporte = $proyectos->documentaciondetransporte ;
-        $this->polizasegurodge = $proyectos->polizasegurodge;
+        if(is_null($this->proyecto_id)) {
+            $proyectos = Proyectos::find($id);
+            $this->anio = $proyectos->anio;
+            $this->descripciondelapropuesta = $proyectos->descripciondelapropuesta;
+            $this->intencionalidadpedagógica = $proyectos->intencionalidadpedagógica;
+            $this->relacionconlaslineasdeacciondelpei = $proyectos->relacionconlaslineasdeacciondelpei;
+            $this->determinaciondeestudiantesdocentes = $proyectos->determinaciondeestudiantesdocentes;
+            $this->localizacionfisicaycobertura = $proyectos->localizacionfisicaycobertura;
+            $this->tareasarealizar = $proyectos->tareasarealizar;
+            $this->cronogramaseactividades = $proyectos->cronogramaseactividades;
+            $this->detalledefondos = $proyectos->detalledefondos;
+            $this->responsable_id = $proyectos->responsable_id;
+            $this->documentaciondetransporte = $proyectos->documentaciondetransporte ;
+            $this->polizasegurodge = $proyectos->polizasegurodge;
+            $this->carrera_id = $proyectos->carrera_id;
+            $this->carreraactual = $proyectos->carrera_id;
+            $this->proyecto_id = $id;
 
-        $this->proyecto_id = $id;
-
-        // Carga los datos de los estudiantes que ya están relacionados al proyecto
-        $this->estudiantesnominas = Estudiantenomina::where('proyecto_id','=',$this->proyecto_id)
-        ->join('estudiantes','estudiante_id','estudiantes.id')
-        ->get();
-        $this->docentesnomina = Docentenomina::where('proyecto_id','=',$this->proyecto_id)
-        ->join('responsables','responsable_id','responsables.id')
-        ->get();
-        // dd($this->estudiantesnominas);
+            // Carga los datos de los estudiantes que ya están relacionados al proyecto
+            $this->estudiantesnominas = Estudiantenomina::where('proyecto_id','=',$this->proyecto_id)
+                ->join('estudiantes','estudiante_id','estudiantes.id')
+                ->get();
+            $this->docentesnomina = Docentenomina::where('proyecto_id','=',$this->proyecto_id)
+                ->join('responsables','responsable_id','responsables.id')
+                ->get();
+        } else 
+        { 
+            $this->proyecto_id = null;
+        }
     }
 
     public function borrarProyecto_id() { $this->proyecto_id=null;}
@@ -117,14 +126,40 @@ class ProyectosComponent extends Component
         session()->flash('mensaje', 'Se eliminó el proyecto.');
     }
 
+    public function crearProyecto() {
+
+        $this->validate([
+            'descripciondelapropuesta' => 'required',
+        ]);
+        $proyecto = new Proyectos;
+        
+        $proyecto->anio = 0;
+        $proyecto->intencionalidadpedagógica = '';
+        $proyecto->relacionconlaslineasdeacciondelpei = '';
+        $proyecto->determinaciondeestudiantesdocentes = '';
+        $proyecto->localizacionfisicaycobertura = '';
+        $proyecto->tareasarealizar = '';
+        $proyecto->cronogramaseactividades = '';
+        $proyecto->detalledefondos = '';
+        $proyecto->responsable_id = 1;
+        $proyecto->documentaciondetransporte = '';
+        $proyecto->polizasegurodge = '';
+        $proyecto->carrera_id = 1;
+
+        $proyecto->descripciondelapropuesta = $this->descripciondelapropuesta;
+        $proyecto->save();
+        session()->flash('mensaje', 'Se guardó el proyecto.');
+    }
+
     public function store() {
+
         $this->validate([
             'anio' => 'required',
             'descripciondelapropuesta' => 'required',
             'intencionalidadpedagógica' => 'required',
             'relacionconlaslineasdeacciondelpei' => 'required',
-            'determinaciondeestudiantesdocentes' => 'required',
-            'localizacionfisicaycobertura' => 'required',
+            // 'determinaciondeestudiantesdocentes' => 'required',
+            // 'localizacionfisicaycobertura' => 'required',
             'tareasarealizar' => 'required',
             'cronogramaseactividades' => 'required',
             'detalledefondos' => 'required',
@@ -132,7 +167,7 @@ class ProyectosComponent extends Component
             'documentaciondetransporte' => 'required',
             'polizasegurodge' => 'required',
         ]);
-        // dd($this->descripciondelapropuesta);
+        //  dd($this->documentaciondetransporte);
         Proyectos::updateOrCreate(['id'=>$this->proyecto_id],[
             'anio' => $this->anio,
             'descripciondelapropuesta' => $this->descripciondelapropuesta,
@@ -143,9 +178,9 @@ class ProyectosComponent extends Component
             'tareasarealizar' => $this->tareasarealizar,
             'cronogramaseactividades' => $this->cronogramaseactividades,
             'detalledefondos' => $this->detalledefondos,
-            'responsable_id' => 1, //$this->responsable_id,
-            'documentaciondetransporte' => 'dasdsa', //$this->documentaciondetransporte,
-            'polizasegurodge' => $this->polizasegurodge
+            'responsable_id' => $this->responsable_id,
+            'documentaciondetransporte' => $this->documentaciondetransporte,
+            'polizasegurodge' => $this->polizasegurodge,
         ]);
         $this->proyecto_id = null;
         session()->flash('mensaje', 'Se guardó el proyecto.');
@@ -153,6 +188,15 @@ class ProyectosComponent extends Component
 
     public function selectCarrera() {
         $this->estudiantes = Estudiantes::where('carrera_id','=',$this->carrera_id)->get();
+    }
+
+    public function CargarTablasParticipantes() {
+        $this->estudiantesnominas = Estudiantenomina::where('proyecto_id','=',$this->proyecto_id)
+        ->join('estudiantes','estudiante_id','estudiantes.id')
+        ->get();
+        $this->docentesnomina = Docentenomina::where('proyecto_id','=',$this->proyecto_id)
+        ->join('responsables','responsable_id','responsables.id')
+        ->get();
     }
 
     public function agregaralumnonomina() {
@@ -166,18 +210,14 @@ class ProyectosComponent extends Component
             'proyecto_id' => $this->proyecto_id,
         ]);
         $this->estudiantenomina_id = null;  //limpia la variable
-        $this->estudiantesnominas = Estudiantenomina::where('proyecto_id','=',$this->proyecto_id)
-        ->join('estudiantes','estudiante_id','estudiantes.id')
-        ->get();
+        $this->CargarTablasParticipantes();
     }
 
     public function eliminaralumnonomina($id) {
         $variable = Estudiantenomina::where('estudiante_id',$id)->where('proyecto_id','=',$this->proyecto_id)->get();
         //dd($variable[0]['id']);
         Estudiantenomina::destroy($variable[0]['id']);
-        $this->estudiantesnominas = Estudiantenomina::where('proyecto_id','=',$this->proyecto_id)
-        ->join('estudiantes','estudiante_id','estudiantes.id')
-        ->get();
+        $this->CargarTablasParticipantes();
     }
     
     public function agregardocentenomina() {
@@ -191,16 +231,16 @@ class ProyectosComponent extends Component
             'proyecto_id' => $this->proyecto_id,
         ]);
         $this->docentenomina_id = null;  //limpia la variable
-        $this->docentesnomina = Docentenomina::where('proyecto_id','=',$this->proyecto_id)
-        ->join('responsables','responsable_id','responsables.id')
-        ->get();
+        $this->CargarTablasParticipantes();
     }
     public function eliminardocentenomina($id){
         $variable = Docentenomina::where('responsable_id',$id)->where('proyecto_id','=',$this->proyecto_id)->get();
         //dd($variable[0]['id']);
         Docentenomina::destroy($variable[0]['id']);
-        $this->docentesnomina = Docentenomina::where('proyecto_id','=',$this->proyecto_id)
-        ->join('responsables','responsable_id','responsables.id')
-        ->get();
+        $this->CargarTablasParticipantes();
+    }
+
+    public function Imprimir() {
+        dd($this->buscar);
     }
 }

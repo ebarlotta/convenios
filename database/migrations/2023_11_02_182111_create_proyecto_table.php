@@ -13,22 +13,24 @@ return new class extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
-            $table->integer('anio');
+            $table->integer('anio')->nullable();
             $table->string('descripciondelapropuesta');
             $table->string('intencionalidadpedagógica');
             $table->string('relacionconlaslineasdeacciondelpei');
-            $table->string('determinaciondeestudiantesdocentes');
-            $table->string('localizacionfisicaycobertura');
+            $table->string('determinaciondeestudiantesdocentes')->nullable();
+            $table->string('localizacionfisicaycobertura')->nullable();
             $table->string('tareasarealizar');
             $table->string('cronogramaseactividades');
             $table->string('detalledefondos');
-            $table->unsignedBigInteger('responsable_id');
-            $table->string('documentaciondetransporte');
+            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->string('documentaciondetransporte')->nullable();
             $table->string('polizasegurodge');
+            $table->unsignedBigInteger('carrera_id')->nullable();
             
             $table->timestamps();
 
             $table->foreign('responsable_id')->references('id')->on('responsables');
+            $table->foreign('carrera_id')->references('id')->on('carreras');
 
         });
     }

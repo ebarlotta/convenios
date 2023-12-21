@@ -1,7 +1,7 @@
 <div>
-    <div class="grey-bg container-fluid">
-        <section id="content">
-            @extends('layouts.admin')
+    <section id="content">
+        @extends('layouts.admin')
+        <div class="grey-bg container-fluid">
             @if(session("mensaje"))
             <div class="bg-green round-md alert alert-success">
                 {{ session('mensaje') }}
@@ -26,7 +26,7 @@
                                                             <option value="2023" selected>2023</option>
                                                             <option value="2024" selected>2024</option>
                                                         </select>
-                                                        <!-- <input type="text" class="form-control" value="{{ old('anio') }}" wire:model="anio"> -->
+                                                        <input type="text" class="form-control" value="{{ old('anio') }}" wire:model="anio">
                                                         @error('nroproyecto')
                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
@@ -34,7 +34,7 @@
                                                     <div>
                                                         <label for="">Descripcion de la propuesta</label>
                                                         <textarea id="mytextarea">Hello, World!</textarea>
-                                                        <textarea wire:model="descripciondelapropuesta" rows="5" style="width: 100%;">{{ old('descripciondelapropuesta') }}</textarea>
+                                                        <textarea wire:model="descripciondelapropuesta" rows="5" style="width: 100%;">{{ $this->descripciondelapropuesta }}</textarea>
                                                         <!-- <input type="text" class="form-control" value="{{ old('descripciondelapropuesta') }}" wire:model="descripciondelapropuesta"> -->
                                                         @error('descripciondelapropuesta')
                                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -168,6 +168,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </div>

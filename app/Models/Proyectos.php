@@ -22,5 +22,10 @@ class Proyectos extends Model
         'responsable_id',
         'documentaciondetransporte ',
         'polizasegurodge',
+        'carrera_id',
     ];
+
+    public function carrera() {
+        return $this->hasOne(Carreras::class,'id','carrera_id');
+    }
 }
